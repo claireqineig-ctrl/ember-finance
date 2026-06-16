@@ -1,0 +1,1864 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ember.finance — a safe space for finance professionals</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #1C1F2E;
+    --navy-card: #252A3C;
+    --navy-deep: #171A28;
+    --amber: #D4894A;
+    --amber-light: #F0B97A;
+    --slate: #6B7A99;
+    --cream: #F5F0E8;
+    --text-main: #E8E4DC;
+    --text-muted: #8A95B0;
+    --border: rgba(107,122,153,0.25);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--navy);
+    color: var(--text-main);
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  .site-header {
+    padding: 1.5rem 2.5rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    position: sticky;
+    top: 0;
+    background: var(--navy);
+    z-index: 10;
+  }
+  .logo-block { display: flex; flex-direction: column; gap: 2px; }
+  .site-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--cream);
+    letter-spacing: -0.3px;
+  }
+  .site-title span { color: var(--amber); }
+  .tagline { font-size: 12px; color: var(--text-muted); letter-spacing: 0.4px; }
+  .share-btn {
+    background: var(--amber);
+    color: #1C1F2E;
+    border: none;
+    padding: 10px 22px;
+    border-radius: 6px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .share-btn:hover { background: var(--amber-light); }
+
+  /* HERO */
+  .hero {
+    padding: 3rem 2.5rem 1.5rem;
+    max-width: 560px;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    font-weight: 400;
+    color: var(--cream);
+    line-height: 1.35;
+    margin-bottom: 0.75rem;
+  }
+  .hero p { font-size: 15px; color: var(--text-muted); line-height: 1.75; }
+
+  /* FILTER BAR */
+  .filter-bar {
+    padding: 0 0 1.5rem;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .filter-pill {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    padding: 6px 16px;
+    border-radius: 100px;
+    font-size: 13px;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.2s;
+  }
+  .filter-pill:hover, .filter-pill.active {
+    border-color: var(--amber);
+    color: var(--amber);
+    background: rgba(212,137,74,0.08);
+  }
+
+  /* PAGE LAYOUT */
+  .page-body {
+    padding: 0 2.5rem;
+  }
+  .page-main { min-width: 0; }
+
+  /* STORIES GRID */
+  .stories-grid {
+    padding: 0 0 4rem;
+    columns: 2;
+    column-gap: 16px;
+  }
+  @media (max-width: 680px) {
+    .stories-grid { columns: 1; padding: 0 0 3rem; }
+    .hero { padding: 2rem 1.25rem 1rem; }
+    .filter-bar { padding: 0 1.25rem 1.25rem; }
+    .site-header { padding: 1.25rem; }
+    .page-body { padding: 0 1.25rem; }
+  }
+
+  .story-card {
+    break-inside: avoid;
+    background: var(--navy-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.4rem;
+    margin-bottom: 16px;
+    cursor: pointer;
+    transition: border-color 0.2s, transform 0.15s;
+    display: block;
+    width: 100%;
+    text-align: left;
+  }
+  .story-card:hover {
+    border-color: rgba(212,137,74,0.45);
+    transform: translateY(-2px);
+  }
+
+  .story-meta {
+    display: flex;
+    gap: 7px;
+    flex-wrap: wrap;
+    margin-bottom: 0.85rem;
+  }
+  .meta-tag {
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 100px;
+    font-weight: 500;
+    letter-spacing: 0.2px;
+  }
+  .tag-role { background: rgba(107,122,153,0.2); color: var(--slate); }
+  .tag-years { background: rgba(212,137,74,0.12); color: var(--amber); }
+  .tag-stage-1 { background: rgba(212,180,74,0.12); color: #D4C44A; }
+  .tag-stage-2 { background: rgba(212,137,74,0.15); color: #D4894A; }
+  .tag-stage-3 { background: rgba(180,60,60,0.2); color: #D46060; }
+  .tag-stage-4 { background: rgba(74,180,130,0.15); color: #4AB882; }
+
+  .story-text {
+    font-size: 14px;
+    color: var(--text-main);
+    line-height: 1.8;
+    display: -webkit-box;
+    -webkit-line-clamp: 6;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .flame-bar {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    margin-top: 12px;
+  }
+  .flame-dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: rgba(107,122,153,0.3);
+    transition: background 0.2s;
+  }
+  .flame-dot.lit-1 { background: #D4C44A; }
+  .flame-dot.lit-2 { background: #D4894A; }
+  .flame-dot.lit-3 { background: #D46060; }
+  .flame-dot.lit-4 { background: #4AB882; }
+
+  .story-footer {
+    margin-top: 0.85rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--border);
+  }
+  .comment-count { font-size: 12px; color: var(--text-muted); }
+  .read-more { font-size: 12px; color: var(--amber); font-weight: 500; }
+
+  /* MODAL OVERLAY */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(10,12,20,0.88);
+    z-index: 200;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 3rem 1.5rem 2rem;
+    overflow-y: auto;
+  }
+  .modal-overlay.hidden { display: none; }
+
+  .modal {
+    background: var(--navy-card);
+    border: 1px solid rgba(107,122,153,0.35);
+    border-radius: 14px;
+    padding: 2.25rem;
+    width: 100%;
+    max-width: 540px;
+    position: relative;
+    margin-bottom: 2rem;
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 1.1rem; right: 1.25rem;
+    background: none; border: none;
+    color: var(--text-muted);
+    font-size: 26px;
+    line-height: 1;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: color 0.15s;
+  }
+  .modal-close:hover { color: var(--text-main); }
+
+  .modal h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 400;
+    color: var(--cream);
+    margin-bottom: 0.4rem;
+    padding-right: 2rem;
+  }
+  .modal-sub {
+    font-size: 13.5px;
+    color: var(--text-muted);
+    margin-bottom: 1.75rem;
+    line-height: 1.6;
+  }
+
+  /* FORM */
+  .form-group { margin-bottom: 1.35rem; }
+  .form-label {
+    display: block;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-muted);
+    letter-spacing: 0.7px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .select-wrap { position: relative; }
+  .select-wrap::after {
+    content: '▾';
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    pointer-events: none;
+    font-size: 13px;
+  }
+
+  .form-select, .form-textarea {
+    width: 100%;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(107,122,153,0.3);
+    border-radius: 8px;
+    color: var(--text-main);
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    padding: 11px 14px;
+    outline: none;
+    transition: border-color 0.2s;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+  .form-select:focus, .form-textarea:focus {
+    border-color: var(--amber);
+  }
+  .form-select option { background: #252A3C; color: var(--text-main); }
+  .form-textarea {
+    resize: vertical;
+    min-height: 150px;
+    line-height: 1.7;
+  }
+  .form-textarea::placeholder, .form-select::placeholder { color: var(--text-muted); }
+
+  /* BURNOUT STAGE PICKER */
+  .burnout-picker {
+    display: flex;
+    gap: 8px;
+  }
+  .burnout-opt {
+    flex: 1;
+    border: 1px solid rgba(107,122,153,0.3);
+    border-radius: 9px;
+    padding: 12px 8px;
+    cursor: pointer;
+    text-align: center;
+    background: transparent;
+    font-family: 'Inter', sans-serif;
+    color: var(--text-muted);
+    font-size: 12px;
+    line-height: 1.5;
+    transition: all 0.2s;
+  }
+  .burnout-opt:hover { border-color: rgba(212,137,74,0.5); color: var(--text-main); }
+  .burnout-dots { font-size: 15px; display: block; margin-bottom: 5px; letter-spacing: 3px; }
+
+  .burnout-opt.sel-1 { border-color: #D4C44A; background: rgba(212,196,74,0.1); color: #D4C44A; }
+  .burnout-opt.sel-2 { border-color: #D4894A; background: rgba(212,137,74,0.1); color: #D4894A; }
+  .burnout-opt.sel-3 { border-color: #D46060; background: rgba(212,96,96,0.12); color: #D46060; }
+  .burnout-opt.sel-4 { border-color: #4AB882; background: rgba(74,184,130,0.12); color: #4AB882; }
+
+  /* SUBMIT BUTTON */
+  .submit-btn {
+    width: 100%;
+    background: var(--amber);
+    color: #1C1F2E;
+    border: none;
+    border-radius: 8px;
+    padding: 13px;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    margin-top: 0.5rem;
+    transition: background 0.2s;
+  }
+  .submit-btn:hover { background: var(--amber-light); }
+
+  /* SUCCESS VIEW */
+  .success-view {
+    text-align: center;
+    padding: 2.5rem 1rem;
+  }
+  .success-view .candle { font-size: 40px; margin-bottom: 1rem; }
+  .success-view h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    color: var(--cream);
+    margin-bottom: 0.6rem;
+  }
+  .success-view p {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin-bottom: 1.75rem;
+  }
+  .success-view .submit-btn { max-width: 200px; margin: 0 auto; }
+
+  /* STORY VIEW */
+  .view-story-text {
+    font-size: 15px;
+    color: var(--text-main);
+    line-height: 1.85;
+    margin-bottom: 1.75rem;
+    white-space: pre-line;
+  }
+
+  .comments-section h3 {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-muted);
+    letter-spacing: 0.7px;
+    text-transform: uppercase;
+    margin-bottom: 0.9rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .comment-item {
+    background: rgba(255,255,255,0.04);
+    border-radius: 8px;
+    padding: 11px 14px;
+    margin-bottom: 8px;
+  }
+  .comment-item p { font-size: 13.5px; color: var(--text-main); line-height: 1.65; }
+  .comment-item .c-date { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
+
+  .no-comments {
+    font-size: 13px;
+    color: var(--text-muted);
+    font-style: italic;
+    margin-bottom: 1rem;
+  }
+
+  .comment-row {
+    display: flex;
+    gap: 8px;
+    margin-top: 0.9rem;
+  }
+  .comment-input {
+    flex: 1;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(107,122,153,0.3);
+    border-radius: 8px;
+    color: var(--text-main);
+    font-family: 'Inter', sans-serif;
+    font-size: 13.5px;
+    padding: 10px 13px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .comment-input:focus { border-color: var(--amber); }
+  .comment-input::placeholder { color: var(--text-muted); }
+  .comment-send {
+    background: var(--amber);
+    color: #1C1F2E;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 18px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    white-space: nowrap;
+    transition: background 0.2s;
+  }
+  .comment-send:hover { background: var(--amber-light); }
+
+  .empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: var(--text-muted);
+    font-size: 14px;
+    line-height: 1.7;
+  }
+  .empty-state p:first-child { font-size: 28px; margin-bottom: 0.75rem; }
+
+  /* TOKEN SEARCH BAR */
+  .token-bar {
+    padding: 0 0 1.25rem;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  @media (max-width: 680px) {
+    .token-bar { padding: 0 1.25rem 1rem; }
+  }
+  .token-input-wrap {
+    position: relative;
+    flex: 1;
+    max-width: 340px;
+  }
+  .token-icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 14px;
+    pointer-events: none;
+    opacity: 0.5;
+  }
+  .token-input {
+    width: 100%;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text-main);
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    padding: 9px 14px 9px 34px;
+    outline: none;
+    transition: border-color 0.2s;
+    letter-spacing: 0.3px;
+  }
+  .token-input:focus { border-color: var(--amber); }
+  .token-input::placeholder { color: var(--text-muted); }
+  .token-search-btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    padding: 9px 16px;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .token-search-btn:hover {
+    border-color: var(--amber);
+    color: var(--amber);
+  }
+  .token-error {
+    font-size: 12px;
+    color: #D46060;
+    margin-left: 2px;
+    display: none;
+  }
+
+  /* TOKEN DISPLAY in success view */
+  .token-box {
+    background: rgba(212,137,74,0.1);
+    border: 1px solid rgba(212,137,74,0.35);
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    margin: 1rem 0 1.5rem;
+    text-align: left;
+  }
+  .token-box-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+  .token-box-value {
+    font-family: 'Inter', monospace;
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--amber);
+    letter-spacing: 3px;
+  }
+  .token-box-hint {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 6px;
+    line-height: 1.5;
+  }
+  .token-copy-btn {
+    display: inline-block;
+    margin-top: 10px;
+    background: transparent;
+    border: 1px solid rgba(212,137,74,0.4);
+    color: var(--amber);
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    padding: 5px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .token-copy-btn:hover { background: rgba(212,137,74,0.1); }
+
+  /* YOUR STORY badge in modal */
+  .your-story-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: rgba(212,137,74,0.12);
+    border: 1px solid rgba(212,137,74,0.3);
+    color: var(--amber);
+    font-size: 11px;
+    font-weight: 500;
+    padding: 4px 10px;
+    border-radius: 100px;
+    margin-bottom: 1rem;
+    letter-spacing: 0.3px;
+  }
+
+  /* FOOTER */
+  .site-footer {
+    border-top: 1px solid var(--border);
+    padding: 2.5rem 2.5rem 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  @media (max-width: 680px) {
+    .site-footer { padding: 2rem 1.25rem 2.5rem; }
+  }
+  .footer-resources {
+    background: rgba(212,137,74,0.07);
+    border: 1px solid rgba(212,137,74,0.2);
+    border-radius: 10px;
+    padding: 1.1rem 1.4rem;
+  }
+  .footer-resources-title {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--amber);
+    letter-spacing: 0.7px;
+    text-transform: uppercase;
+    margin-bottom: 0.6rem;
+  }
+  .footer-resources p {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+  .footer-resources a {
+    color: var(--amber-light);
+    text-decoration: none;
+  }
+  .footer-resources a:hover { text-decoration: underline; }
+  .footer-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+  .footer-copy {
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+  .footer-links {
+    display: flex;
+    gap: 1.25rem;
+  }
+  .footer-links a {
+    font-size: 12px;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--amber); }
+  .footer-disclaimer {
+    font-size: 11.5px;
+    color: var(--text-muted);
+    line-height: 1.65;
+    opacity: 0.75;
+  }
+
+  /* ── OWNER CORNER ── */
+  .owner-corner {
+    position: fixed;
+    top: 80px;
+    right: 2.5rem;
+    z-index: 200;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+    width: calc(50% - 2.5rem - 12px);
+    max-width: 680px;
+  }
+  .owner-panel {
+    background: #1a1a2e;
+    border: 1px solid rgba(212,137,74,0.35);
+    border-radius: 14px;
+    padding: 1.5rem 1.6rem;
+    width: 100%;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.45);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    opacity: 1;
+    transform: scale(1);
+    pointer-events: all;
+  }
+  .owner-panel.minimized {
+    opacity: 0;
+    transform: scale(0.85);
+    pointer-events: none;
+    height: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+  .owner-panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+  .owner-panel-header-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .owner-avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--amber), #c0673a);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .owner-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-main);
+  }
+  .owner-role {
+    font-size: 11px;
+    color: var(--amber);
+    margin-top: 1px;
+  }
+  .owner-minimize-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-size: 18px;
+    cursor: pointer;
+    line-height: 1;
+    padding: 2px 4px;
+    border-radius: 4px;
+    transition: color 0.2s;
+    flex-shrink: 0;
+  }
+  .owner-minimize-btn:hover { color: var(--amber); }
+  .owner-message {
+    font-size: 13.5px;
+    color: var(--text-muted);
+    line-height: 1.75;
+    margin-bottom: 1.1rem;
+    font-style: italic;
+    border-left: 2px solid rgba(212,137,74,0.4);
+    padding-left: 0.9rem;
+  }
+  .owner-footer-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding-top: 0.9rem;
+    border-top: 1px solid var(--border);
+    margin-top: 0.9rem;
+  }
+  .owner-divider { display: none; }
+  .owner-stats {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 0;
+  }
+  .owner-stats span { color: var(--amber); font-weight: 600; }
+  .feedback-btn {
+    background: rgba(212,137,74,0.12);
+    border: 1px solid rgba(212,137,74,0.35);
+    color: var(--amber);
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 9px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .feedback-btn:hover { background: rgba(212,137,74,0.22); }
+  .owner-toggle {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--amber), #c0673a);
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 16px rgba(212,137,74,0.4);
+    transition: transform 0.2s, opacity 0.25s;
+    opacity: 0;
+    pointer-events: none;
+    align-self: flex-end;
+  }
+  .owner-toggle.visible {
+    opacity: 1;
+    pointer-events: all;
+  }
+  .owner-toggle:hover { transform: scale(1.08); }
+
+  /* ── STORY AUTHOR BADGE in comments ── */
+  .comment-item.is-author {
+    background: rgba(212,137,74,0.06);
+    border: 1px solid rgba(212,137,74,0.2);
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+  }
+  .author-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: rgba(212,137,74,0.15);
+    border: 1px solid rgba(212,137,74,0.35);
+    color: var(--amber);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 100px;
+    margin-bottom: 5px;
+  }
+
+  /* ── FEEDBACK MODAL ── */
+  .feedback-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(10,10,20,0.75);
+    backdrop-filter: blur(6px);
+    z-index: 300;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+  }
+  .feedback-overlay.hidden { display: none; }
+  .feedback-modal {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2rem;
+    max-width: 420px;
+    width: 100%;
+    position: relative;
+  }
+  .feedback-modal h2 {
+    font-size: 20px;
+    margin-bottom: 0.4rem;
+    color: var(--text-main);
+  }
+  .feedback-modal p {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 1.25rem;
+    line-height: 1.6;
+  }
+  .feedback-field {
+    width: 100%;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text-main);
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    padding: 10px 13px;
+    margin-bottom: 10px;
+    outline: none;
+    box-sizing: border-box;
+    transition: border-color 0.2s;
+  }
+  .feedback-field:focus { border-color: var(--amber); }
+  .feedback-field::placeholder { color: var(--text-muted); }
+  textarea.feedback-field { min-height: 110px; resize: vertical; }
+  .feedback-send-btn {
+    width: 100%;
+    background: var(--amber);
+    border: none;
+    color: #0e0e1a;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 11px;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 4px;
+    transition: opacity 0.2s;
+  }
+  .feedback-send-btn:hover { opacity: 0.88; }
+  .feedback-success {
+    text-align: center;
+    padding: 1.5rem 0;
+    display: none;
+  }
+  .feedback-success .candle { font-size: 36px; margin-bottom: 0.75rem; }
+  .feedback-success h3 { color: var(--text-main); margin-bottom: 0.5rem; }
+  .feedback-success p { color: var(--text-muted); font-size: 13px; }
+
+  /* ── EDIT / DELETE STORY ACTIONS ── */
+  .story-owner-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 1.25rem;
+    padding-top: 1.1rem;
+    border-top: 1px solid var(--border);
+  }
+  .action-edit-btn {
+    flex: 1;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    padding: 9px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .action-edit-btn:hover { border-color: var(--amber); color: var(--amber); }
+  .action-delete-btn {
+    flex: 1;
+    background: rgba(212,96,96,0.08);
+    border: 1px solid rgba(212,96,96,0.25);
+    color: #D46060;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    padding: 9px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .action-delete-btn:hover { background: rgba(212,96,96,0.18); }
+  .edit-story-wrap { margin-top: 0.75rem; display: none; }
+  .edit-story-textarea {
+    width: 100%;
+    min-height: 140px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--amber);
+    border-radius: 8px;
+    color: var(--text-main);
+    font-family: 'Inter', sans-serif;
+    font-size: 13.5px;
+    line-height: 1.7;
+    padding: 12px 14px;
+    resize: vertical;
+    outline: none;
+    box-sizing: border-box;
+  }
+  .edit-save-btn {
+    margin-top: 8px;
+    background: var(--amber);
+    border: none;
+    color: #0e0e1a;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 9px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .edit-save-btn:hover { opacity: 0.85; }
+  .edit-cancel-btn {
+    margin-top: 8px;
+    margin-left: 8px;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    padding: 9px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  /* ── EDIT MODE ── */
+  .edit-mode-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 9999;
+    background: linear-gradient(90deg, #1a1a2e, #0e0e1a);
+    border-top: 1px solid rgba(212,137,74,0.4);
+    padding: 10px 24px;
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .edit-mode-bar.active { display: flex; }
+  .edit-mode-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--amber);
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .edit-mode-label::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--amber);
+    display: inline-block;
+    animation: pulse 1.5s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+  .edit-mode-hint {
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+  .edit-mode-exit {
+    background: transparent;
+    border: 1px solid rgba(212,137,74,0.4);
+    color: var(--amber);
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    padding: 6px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .edit-mode-exit:hover { background: rgba(212,137,74,0.1); }
+
+  body.edit-mode [data-editable] {
+    outline: 2px dashed rgba(212,137,74,0.5);
+    outline-offset: 4px;
+    border-radius: 4px;
+    cursor: text;
+    transition: outline-color 0.2s, background 0.2s;
+  }
+  body.edit-mode [data-editable]:hover {
+    outline-color: var(--amber);
+    background: rgba(212,137,74,0.06);
+  }
+  body.edit-mode [data-editable]:focus {
+    outline-color: var(--amber);
+    outline-style: solid;
+    background: rgba(212,137,74,0.08);
+  }
+  .edit-saved-toast {
+    position: fixed;
+    bottom: 60px;
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    background: #1a1a2e;
+    border: 1px solid rgba(212,137,74,0.4);
+    color: var(--amber);
+    font-size: 13px;
+    padding: 8px 18px;
+    border-radius: 8px;
+    opacity: 0;
+    transition: opacity 0.3s, transform 0.3s;
+    pointer-events: none;
+    z-index: 10000;
+    white-space: nowrap;
+  }
+  .edit-saved-toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  /* PASSWORD PROMPT */
+  .edit-pw-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(10,10,20,0.8);
+    backdrop-filter: blur(8px);
+    z-index: 9998;
+    display: none;
+    align-items: center;
+    justify-content: center;
+  }
+  .edit-pw-overlay.show { display: flex; }
+  .edit-pw-box {
+    background: var(--surface);
+    border: 1px solid rgba(212,137,74,0.35);
+    border-radius: 14px;
+    padding: 2rem;
+    width: 320px;
+    text-align: center;
+  }
+  .edit-pw-box h3 {
+    font-size: 17px;
+    color: var(--text-main);
+    margin-bottom: 0.4rem;
+  }
+  .edit-pw-box p {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 1.25rem;
+  }
+  .edit-pw-input {
+    width: 100%;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text-main);
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    padding: 10px 14px;
+    outline: none;
+    text-align: center;
+    letter-spacing: 3px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+    transition: border-color 0.2s;
+  }
+  .edit-pw-input:focus { border-color: var(--amber); }
+  .edit-pw-btn {
+    width: 100%;
+    background: var(--amber);
+    border: none;
+    color: #0e0e1a;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .edit-pw-btn:hover { opacity: 0.85; }
+  .edit-pw-error {
+    font-size: 12px;
+    color: #D46060;
+    margin-top: 8px;
+    display: none;
+  }
+</style>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js" onload="emailjs.init('js-WIlsjum9uvcTyI')"></script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="logo-block">
+    <div class="site-title">ember<span>.</span>finance</div>
+    <div class="tagline" data-editable="tagline">a safe space for sharing doubts, vulnerability, and showing support for peers</div>
+  </div>
+  <button class="share-btn" onclick="openSubmit()">Share your story</button>
+</header>
+
+<section class="hero">
+  <h1 data-editable="hero-headline">Sometimes we need the inner peace to keep pursuit</h1>
+  <p data-editable="hero-subtext">Real stories from finance professionals — anonymously shared, no strings attached. Share your story and comment to which resonates. Honesty and openness are what matter.</p>
+</section>
+
+<div class="page-body">
+  <div class="page-main">
+    <div class="filter-bar">
+      <button class="filter-pill active" onclick="filterStories('all', this)">All stories</button>
+      <button class="filter-pill" onclick="filterStories('early', this)">Early signs</button>
+      <button class="filter-pill" onclick="filterStories('deep', this)">Deep in it</button>
+      <button class="filter-pill" onclick="filterStories('crisis', this)">Crisis point</button>
+      <button class="filter-pill" onclick="filterStories('recovery', this)">Recovery</button>
+    </div>
+    <div class="token-bar">
+      <div class="token-input-wrap">
+        <span class="token-icon">🔑</span>
+        <input class="token-input" id="tokenInput" placeholder="Enter your story token (e.g. EMB-4X7K)" maxlength="8"
+          oninput="this.value = this.value.toUpperCase()" onkeydown="if(event.key==='Enter') findMyStory()" />
+      </div>
+      <button class="token-search-btn" onclick="findMyStory()">Find my story</button>
+      <span class="token-error" id="tokenError">No story found with that token.</span>
+    </div>
+    <div class="stories-grid" id="storiesGrid"></div>
+  </div>
+
+</div>
+
+<!-- SUBMIT MODAL -->
+<div class="modal-overlay hidden" id="submitOverlay" onclick="overlayClick(event,'submitOverlay')">
+  <div class="modal">
+    <button class="modal-close" onclick="closeSubmit()">&times;</button>
+
+    <div id="formView">
+      <h2>Tell us what you're carrying.</h2>
+      <p class="modal-sub">Your story is anonymous. No names, no firms — just the truth of the experience.</p>
+
+      <div class="form-group">
+        <label class="form-label">Your role</label>
+        <div class="select-wrap">
+          <select class="form-select" id="roleSelect">
+            <option value="">Select your position</option>
+            <option>Analyst</option>
+            <option>Associate</option>
+            <option>Vice President</option>
+            <option>Director</option>
+            <option>Managing Director</option>
+            <option>Partner / Principal</option>
+            <option>CFO / C-Suite</option>
+            <option>Portfolio Manager</option>
+            <option>Risk / Compliance</option>
+            <option>Other</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Years in finance</label>
+        <div class="select-wrap">
+          <select class="form-select" id="yearsSelect">
+            <option value="">Select years</option>
+            <option>Less than 1 year</option>
+            <option>1–3 years</option>
+            <option>4–7 years</option>
+            <option>8–12 years</option>
+            <option>13–20 years</option>
+            <option>20+ years</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Where are you right now?</label>
+        <div class="burnout-picker">
+          <button class="burnout-opt" id="stage1" onclick="selectStage(1)">
+            <span class="burnout-dots">○ ○ ○</span>
+            Early signs
+          </button>
+          <button class="burnout-opt" id="stage2" onclick="selectStage(2)">
+            <span class="burnout-dots">◉ ○ ○</span>
+            Deep in it
+          </button>
+          <button class="burnout-opt" id="stage3" onclick="selectStage(3)">
+            <span class="burnout-dots">◉ ◉ ◉</span>
+            Crisis point
+          </button>
+          <button class="burnout-opt" id="stage4" onclick="selectStage(4)">
+            <span class="burnout-dots">✦ ✦ ✦</span>
+            Recovery
+          </button>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Your story</label>
+        <textarea class="form-textarea" id="storyText" placeholder="What's been happening? There's no right way to say it..."></textarea>
+      </div>
+
+      <button class="submit-btn" onclick="submitStory()">Post anonymously</button>
+    </div>
+
+    <div id="successView" style="display:none">
+      <div class="success-view">
+        <div class="candle">🕯</div>
+        <h2>Thank you for sharing.</h2>
+        <p>Your story has been added to the wall. Someone out there will read it and feel a little less alone.</p>
+        <div class="token-box">
+          <div class="token-box-label">Your story token</div>
+          <div class="token-box-value" id="successToken">—</div>
+          <div class="token-box-hint">Save this token. You can use it anytime to find your story and see responses from the community.</div>
+          <button class="token-copy-btn" onclick="copyToken()">Copy token</button>
+        </div>
+        <button class="submit-btn" onclick="closeSubmit()">Back to stories</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- VIEW STORY MODAL -->
+<div class="modal-overlay hidden" id="viewOverlay" onclick="overlayClick(event,'viewOverlay')">
+  <div class="modal">
+    <button class="modal-close" onclick="closeView()">&times;</button>
+    <div id="viewContent"></div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-resources">
+    <div class="footer-resources-title">🕯 If you're struggling right now</div>
+    <p>
+      ember.finance is a space to be heard, not a substitute for professional support.
+      If you're in crisis, please reach out — you deserve real help.<br><br>
+      <strong style="color:var(--text-main)">988 Suicide & Crisis Lifeline</strong> — call or text <a href="tel:988">988</a> (US, available 24/7)<br>
+      <strong style="color:var(--text-main)">Crisis Text Line</strong> — text HOME to <a href="sms:741741">741741</a><br>
+      <strong style="color:var(--text-main)">International Association for Suicide Prevention</strong> — <a href="https://www.iasp.info/resources/Crisis_Centres/" target="_blank">find a crisis centre near you</a>
+    </p>
+  </div>
+
+  <p class="footer-disclaimer">
+    ember.finance is an anonymous peer support space. Stories shared here are personal experiences, not professional advice.
+    This platform does not collect personally identifiable information. Content is user-generated and does not represent the views of ember.finance.
+    If you believe a story requires urgent attention, please contact emergency services in your area.
+  </p>
+
+  <div class="footer-bottom">
+    <span class="footer-copy" data-editable="footer-copy">© 2026 ember.finance — all rights reserved</span>
+    <nav class="footer-links">
+      <a href="#" onclick="alert('Terms of Service coming soon.')">Terms of Service</a>
+      <a href="#" onclick="alert('Privacy Policy coming soon.')">Privacy Policy</a>
+      <a href="mailto:hello@ember.finance">Contact</a>
+    </nav>
+  </div>
+</footer>
+
+
+
+<!-- OWNER CORNER -->
+<div class="owner-corner" id="ownerCorner">
+  <div class="owner-panel" id="ownerPanel">
+    <div class="owner-panel-header">
+      <div class="owner-panel-header-left">
+        <div class="owner-avatar">🌿</div>
+        <div>
+          <div class="owner-name" data-editable="founder-name">Claire, Founder</div>
+          <div class="owner-role" data-editable="founder-role">ember.finance</div>
+        </div>
+      </div>
+      <button class="owner-minimize-btn" onclick="toggleOwnerPanel()" title="Minimise">−</button>
+    </div>
+    <p class="owner-message" data-editable="founder-message">
+      I left my previous work as an investment associate after 2.5 years, because I felt disconnected from my work environment and experienced chronic stress. However, I liked what I was doing and think things might have turned out differently if I had found support when I was at my most vulnerable, with guidance to help me navigate the most stressful period. I created this space to allow people in finance to share the moments less known by others and behind "privileges". I hope in this space you can find the empathy, warmth, and imperfection you were missing, and feel appreciated for who you are.
+    </p>
+    <div class="owner-footer-row">
+      <div class="owner-stats">
+        👁 <span id="visitorCount">—</span> visitors since launch
+      </div>
+      <button class="feedback-btn" onclick="openFeedback()">💬 Send me a message</button>
+    </div>
+  </div>
+  <button class="owner-toggle" id="ownerToggle" onclick="toggleOwnerPanel()" title="A note from the founder">🌿</button>
+</div>
+
+<!-- FEEDBACK MODAL -->
+<div class="feedback-overlay hidden" id="feedbackOverlay" onclick="feedbackOverlayClick(event)">
+  <div class="feedback-modal">
+    <button class="modal-close" onclick="closeFeedback()">&times;</button>
+    <div id="feedbackForm">
+      <h2>Send a message</h2>
+      <p>Your message goes directly to Claire. No names needed — share whatever's on your mind about the site.</p>
+      <input class="feedback-field" id="fbSubject" placeholder="Subject (optional)" maxlength="100" />
+      <textarea class="feedback-field" id="fbMessage" placeholder="Your message..."></textarea>
+      <button class="feedback-send-btn" onclick="sendFeedback()">Send message</button>
+    </div>
+    <div class="feedback-success" id="feedbackSuccess">
+      <div class="candle">🕯</div>
+      <h3>Message sent</h3>
+      <p>Thank you — Claire will read it.</p>
+    </div>
+  </div>
+</div>
+
+<!-- EDIT MODE PASSWORD PROMPT -->
+<div class="edit-pw-overlay" id="editPwOverlay">
+  <div class="edit-pw-box">
+    <h3>🔐 Owner Edit Mode</h3>
+    <p>Enter your password to edit page content</p>
+    <input class="edit-pw-input" type="password" id="editPwInput" placeholder="••••••••"
+      onkeydown="if(event.key==='Enter') checkEditPassword()" />
+    <button class="edit-pw-btn" onclick="checkEditPassword()">Unlock</button>
+    <div class="edit-pw-error" id="editPwError">Incorrect password — try again.</div>
+  </div>
+</div>
+
+<!-- EDIT MODE BAR -->
+<div class="edit-mode-bar" id="editModeBar">
+  <div class="edit-mode-label">Edit Mode Active</div>
+  <span class="edit-mode-hint">Click any highlighted text to edit it. Changes save automatically.</span>
+  <button class="edit-mode-exit" onclick="exitEditMode()">Exit edit mode</button>
+</div>
+
+<!-- SAVE TOAST -->
+<div class="edit-saved-toast" id="editToast">✓ Saved</div>
+
+<script>
+  function generateToken() {
+    var chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+    var result = 'EMB-';
+    for (var i = 0; i < 4; i++) result += chars[Math.floor(Math.random() * chars.length)];
+    return result;
+  }
+
+  var stories = [
+    {
+      id: 1,
+      role: 'Vice President',
+      years: '8–12 years',
+      stage: 'deep',
+      stageLabel: 'Deep in it',
+      text: 'I used to be proud of my 6am start. Now I wake up at 3am and can\'t get back to sleep — not because of deadlines, but because my body just won\'t let me rest anymore.\n\nLast quarter I closed the biggest deal of my career. I sat at my desk afterward and felt absolutely nothing. My MD sent a bottle of champagne. I left it on my desk for two weeks. I\'m not sure what I\'m doing this for anymore.',
+      comments: [
+        { text: 'The numbness after a big win — I know that exact feeling. You start questioning everything.', date: '2 days ago' }
+      ]
+    },
+    {
+      id: 2,
+      role: 'Analyst',
+      years: '1–3 years',
+      stage: 'crisis',
+      stageLabel: 'Crisis point',
+      text: 'Third year analyst here. I took a medical leave last month and I\'m still not sure I\'m going back. My hands wouldn\'t stop shaking during our earnings call prep. My manager noticed and asked if I\'d "had too much coffee."\n\nI have a therapist now. She\'s the only person I talk to who actually listens. My friends outside the industry don\'t really get it — they see the salary and think that\'s the whole story.',
+      comments: [
+        { text: 'Please take care of yourself. The salary is never the whole story.', date: '5 days ago' },
+        { text: 'I left after 2 years. Best decision I ever made. But only you know what\'s right for you.', date: '3 days ago' }
+      ]
+    },
+    {
+      id: 3,
+      role: 'Director',
+      years: '13–20 years',
+      stage: 'early',
+      stageLabel: 'Early signs',
+      text: 'I keep telling myself it\'s just a busy season. But busy season has lasted four years. My daughter asked me last weekend if I "live at work." She\'s seven.\n\nI\'ve started declining dinners with colleagues because I just don\'t have anything left. I come home empty. I sit on the sofa and stare at the wall. My wife calls it "the reboot phase." I think she\'s worried but trying not to show it.',
+      comments: []
+    },
+    {
+      id: 4,
+      role: 'Portfolio Manager',
+      years: '20+ years',
+      stage: 'deep',
+      stageLabel: 'Deep in it',
+      text: 'Twenty-two years in. I\'ve survived three market crashes and two restructurings. I thought I was untouchable.\n\nBut something shifted in the last two years. The volatility that used to excite me now just exhausts me. I read the morning news and feel dread instead of opportunity. I\'ve started fantasizing about running a small bookshop somewhere in Vermont. I\'ve never even been to Vermont.',
+      comments: [
+        { text: 'Vermont sounds nice actually. Maybe that fantasy is telling you something.', date: '1 week ago' }
+      ]
+    },
+    {
+      id: 5,
+      role: 'Associate',
+      years: '4–7 years',
+      stage: 'early',
+      stageLabel: 'Early signs',
+      text: 'I used to be the one sending emails at midnight because I genuinely wanted to. Now I do it because I\'m afraid of what happens if I don\'t.\n\nThe difference sounds small but it feels enormous inside. I don\'t know when the shift happened. I\'ve been trying to find it — like retracing steps after losing something. But the before version of me feels very far away.',
+      comments: [
+        { text: 'That shift from intrinsic to fear-based motivation — I felt that so specifically. Thank you for naming it.', date: '4 days ago' }
+      ]
+    },
+    {
+      id: 7,
+      role: 'Associate',
+      years: '4–7 years',
+      stage: 'recovery',
+      stageLabel: 'Recovery',
+      text: 'Six months ago I took a leave of absence. I told my firm it was for "personal reasons" — which felt like the understatement of my career.\n\nI spent the first two weeks sleeping. Then I started walking every morning. Not for fitness, just to feel like I was going somewhere that wasn\'t a desk. Slowly, something started to come back — not ambition exactly, but something quieter. Curiosity, maybe.\n\nI\'m back now, part-time, with actual boundaries. I want to write this for anyone still in the thick of it: there is a different version of this life available to you. I didn\'t think so either, for a long time.',
+      comments: [
+        { text: 'This is the post I needed to read today. Thank you.', date: '3 days ago' },
+        { text: 'The word "curiosity" — yes. That\'s exactly what came back first for me too.', date: '1 day ago' }
+      ]
+    },
+    {
+      id: 6,
+      role: 'Risk / Compliance',
+      years: '8–12 years',
+      stage: 'crisis',
+      stageLabel: 'Crisis point',
+      text: 'I had a panic attack in a client meeting in September. I excused myself, went to the bathroom, sat on the floor for twelve minutes, then went back in and finished the presentation.\n\nNobody knows. I\'ve told no one at work. The culture here is not one where you can say you\'re struggling without it being used against you eventually. So I\'m writing it here, anonymously, to a wall on the internet, at 11pm, because it\'s the only place I feel safe saying it out loud.',
+      comments: [
+        { text: 'You are so brave for writing this down, even anonymously. It counts. It matters.', date: '2 days ago' },
+        { text: 'I have had almost this exact experience. You are not broken. The system is.', date: '1 day ago' }
+      ]
+    }
+  ];
+
+  var selectedStage = null;
+  var currentFilter = 'all';
+
+  function stageClass(stage) {
+    if (stage === 'early') return 'tag-stage-1';
+    if (stage === 'deep') return 'tag-stage-2';
+    if (stage === 'crisis') return 'tag-stage-3';
+    if (stage === 'recovery') return 'tag-stage-4';
+    return 'tag-stage-3';
+  }
+
+  function flameDots(stage) {
+    var dots = '';
+    for (var i = 0; i < 3; i++) {
+      var cls = 'flame-dot';
+      if (stage === 'early' && i === 0) cls = 'flame-dot lit-1';
+      if (stage === 'deep' && i < 2) cls = 'flame-dot lit-2';
+      if (stage === 'crisis') cls = 'flame-dot lit-3';
+      if (stage === 'recovery') cls = 'flame-dot lit-4';
+      dots += '<span class="' + cls + '"></span>';
+    }
+    return dots;
+  }
+
+  function renderStories(filter) {
+    var grid = document.getElementById('storiesGrid');
+    var list = filter === 'all' ? stories : stories.filter(function(s){ return s.stage === filter; });
+    if (list.length === 0) {
+      grid.innerHTML = '<div class="empty-state"><p>🕯</p><p>No stories here yet.<br>Be the first to share.</p></div>';
+      return;
+    }
+    grid.innerHTML = list.map(function(s) {
+      var cnt = s.comments.length;
+      var cLabel = cnt === 0 ? 'No comments yet' : cnt === 1 ? '1 comment' : cnt + ' comments';
+      return '<button class="story-card" onclick="openStory(' + s.id + ')">'
+        + '<div class="story-meta">'
+        + '<span class="meta-tag tag-role">' + s.role + '</span>'
+        + '<span class="meta-tag tag-years">' + s.years + '</span>'
+        + '<span class="meta-tag ' + stageClass(s.stage) + '">' + s.stageLabel + '</span>'
+        + '</div>'
+        + '<div class="story-text">' + s.text.replace(/\n/g, '<br>') + '</div>'
+        + '<div class="flame-bar">' + flameDots(s.stage) + '</div>'
+        + '<div class="story-footer">'
+        + '<span class="comment-count">💬 ' + cLabel + '</span>'
+        + '<span class="read-more">Read more →</span>'
+        + '</div>'
+        + '</button>';
+    }).join('');
+  }
+
+  function filterStories(f, btn) {
+    currentFilter = f;
+    document.querySelectorAll('.filter-pill').forEach(function(p){ p.classList.remove('active'); });
+    btn.classList.add('active');
+    renderStories(f);
+  }
+
+  function openSubmit() {
+    selectedStage = null;
+    document.getElementById('roleSelect').value = '';
+    document.getElementById('yearsSelect').value = '';
+    document.getElementById('storyText').value = '';
+    [1,2,3].forEach(function(n){ document.getElementById('stage'+n).className = 'burnout-opt'; });
+    document.getElementById('stage4').className = 'burnout-opt';
+    document.getElementById('formView').style.display = '';
+    document.getElementById('successView').style.display = 'none';
+    document.getElementById('submitOverlay').classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeSubmit() {
+    document.getElementById('submitOverlay').classList.add('hidden');
+    document.body.style.overflow = '';
+  }
+
+  function selectStage(n) {
+    selectedStage = n;
+    [1,2,3].forEach(function(i){ document.getElementById('stage'+i).className = 'burnout-opt'; });
+    document.getElementById('stage4').className = 'burnout-opt';
+    document.getElementById('stage'+n).className = 'burnout-opt sel-' + n;
+  }
+
+  function submitStory() {
+    var role = document.getElementById('roleSelect').value;
+    var years = document.getElementById('yearsSelect').value;
+    var text = document.getElementById('storyText').value.trim();
+    if (!role || !years || !selectedStage || !text) {
+      alert('Please fill in all fields before sharing your story.');
+      return;
+    }
+    var stageMap = {
+      1: { key: 'early', label: 'Early signs' },
+      2: { key: 'deep', label: 'Deep in it' },
+      3: { key: 'crisis', label: 'Crisis point' },
+      4: { key: 'recovery', label: 'Recovery' }
+    };
+    var token = generateToken();
+    stories.unshift({
+      id: Date.now(),
+      role: role,
+      years: years,
+      stage: stageMap[selectedStage].key,
+      stageLabel: stageMap[selectedStage].label,
+      text: text,
+      token: token,
+      comments: []
+    });
+    renderStories(currentFilter);
+    document.getElementById('successToken').textContent = token;
+    document.getElementById('formView').style.display = 'none';
+    document.getElementById('successView').style.display = '';
+  }
+
+  function renderComments(comments) {
+    if (comments.length === 0) return '<p class="no-comments">No comments yet — be the first to respond.</p>';
+    return comments.map(function(c) {
+      var authorHtml = c.isAuthor
+        ? '<div class="author-badge">✦ Story Author</div>'
+        : '';
+      var cls = c.isAuthor ? 'comment-item is-author' : 'comment-item';
+      return '<div class="' + cls + '">' + authorHtml + '<p>' + c.text + '</p><div class="c-date">' + c.date + '</div></div>';
+    }).join('');
+  }
+
+  function openStory(id, isOwner) {
+    var s = stories.find(function(x){ return x.id === id; });
+    if (!s) return;
+
+    var ownerBadge = isOwner ? '<div class="your-story-badge">🔑 Your story</div>' : '';
+
+    var ownerActions = isOwner
+      ? '<div class="story-owner-actions">'
+        + '<button class="action-edit-btn" onclick="openStoryOwnerActions(' + id + ')">✏️ Edit story</button>'
+        + '<button class="action-delete-btn" onclick="deleteStory(' + id + ')">🗑 Delete story</button>'
+        + '</div>'
+        + '<div class="edit-story-wrap" id="editWrap-' + id + '">'
+        + '<textarea class="edit-story-textarea" id="editText-' + id + '">' + s.text.replace(/</g,'&lt;') + '</textarea>'
+        + '<button class="edit-save-btn" onclick="saveEdit(' + id + ')">Save changes</button>'
+        + '<button class="edit-cancel-btn" onclick="cancelEdit(' + id + ')">Cancel</button>'
+        + '</div>'
+      : '';
+
+    var placeholder = isOwner ? 'Reply to your community...' : 'Leave a word of support...';
+
+    document.getElementById('viewContent').innerHTML =
+      ownerBadge
+      + '<div class="story-meta" style="margin-bottom:1.1rem">'
+      + '<span class="meta-tag tag-role">' + s.role + '</span>'
+      + '<span class="meta-tag tag-years">' + s.years + '</span>'
+      + '<span class="meta-tag ' + stageClass(s.stage) + '">' + s.stageLabel + '</span>'
+      + '</div>'
+      + '<div class="view-story-text">' + s.text + '</div>'
+      + ownerActions
+      + '<div class="comments-section">'
+      + '<h3>Responses</h3>'
+      + '<div id="commentsList">' + renderComments(s.comments) + '</div>'
+      + '<div class="comment-row">'
+      + '<input class="comment-input" id="commentInput" placeholder="' + placeholder + '" maxlength="300" />'
+      + '<button class="comment-send" onclick="postComment(' + id + ',' + (isOwner ? 'true' : 'false') + ')">Post</button>'
+      + '</div>'
+      + '</div>';
+
+    document.getElementById('viewOverlay').classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeView() {
+    document.getElementById('viewOverlay').classList.add('hidden');
+    document.body.style.overflow = '';
+  }
+
+  function postComment(id, isAuthor) {
+    var input = document.getElementById('commentInput');
+    var text = input.value.trim();
+    if (!text) return;
+    var s = stories.find(function(x){ return x.id === id; });
+    s.comments.push({ text: text, date: 'Just now', isAuthor: !!isAuthor });
+    input.value = '';
+    document.getElementById('commentsList').innerHTML = renderComments(s.comments);
+    renderStories(currentFilter);
+  }
+
+  function overlayClick(e, id) {
+    if (e.target === document.getElementById(id)) {
+      document.getElementById(id).classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+  }
+
+  function findMyStory() {
+    var input = document.getElementById('tokenInput').value.trim().toUpperCase();
+    var errEl = document.getElementById('tokenError');
+    errEl.style.display = 'none';
+    if (!input) return;
+    var match = stories.find(function(s) { return s.token === input; });
+    if (!match) {
+      errEl.style.display = 'inline';
+      return;
+    }
+    document.getElementById('tokenInput').value = '';
+    openStory(match.id, true);
+  }
+
+  function copyToken() {
+    var token = document.getElementById('successToken').textContent;
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(token);
+    } else {
+      var el = document.createElement('textarea');
+      el.value = token;
+      document.body.appendChild(el);
+      el.select();
+      document.execCommand('copy');
+      document.body.removeChild(el);
+    }
+    var btn = document.querySelector('.token-copy-btn');
+    btn.textContent = 'Copied!';
+    setTimeout(function() { btn.textContent = 'Copy token'; }, 2000);
+  }
+
+  renderStories('all');
+
+  /* ── EDIT MODE ── */
+  // Change this password to whatever you want
+  var EDIT_PASSWORD = 'ember2026';
+  var editModeOn = false;
+
+  // Keyboard shortcut: Ctrl+Shift+E
+  document.addEventListener('keydown', function(e) {
+    if (e.ctrlKey && e.shiftKey && e.key === 'E') {
+      e.preventDefault();
+      if (editModeOn) {
+        exitEditMode();
+      } else {
+        showEditPrompt();
+      }
+    }
+    if (e.key === 'Escape') {
+      document.getElementById('editPwOverlay').classList.remove('show');
+      document.getElementById('editPwInput').value = '';
+      document.getElementById('editPwError').style.display = 'none';
+    }
+  });
+
+  function showEditPrompt() {
+    document.getElementById('editPwOverlay').classList.add('show');
+    setTimeout(function() { document.getElementById('editPwInput').focus(); }, 100);
+  }
+
+  function checkEditPassword() {
+    var val = document.getElementById('editPwInput').value;
+    if (val === EDIT_PASSWORD) {
+      document.getElementById('editPwOverlay').classList.remove('show');
+      document.getElementById('editPwInput').value = '';
+      document.getElementById('editPwError').style.display = 'none';
+      enterEditMode();
+    } else {
+      document.getElementById('editPwError').style.display = 'block';
+      document.getElementById('editPwInput').value = '';
+      document.getElementById('editPwInput').focus();
+    }
+  }
+
+  function enterEditMode() {
+    editModeOn = true;
+    document.body.classList.add('edit-mode');
+    document.getElementById('editModeBar').classList.add('active');
+
+    // Make all editable elements contenteditable
+    document.querySelectorAll('[data-editable]').forEach(function(el) {
+      el.contentEditable = 'true';
+      el.setAttribute('spellcheck', 'true');
+      el.addEventListener('input', onEditableInput);
+      el.addEventListener('blur', onEditableBlur);
+    });
+  }
+
+  function exitEditMode() {
+    editModeOn = false;
+    document.body.classList.remove('edit-mode');
+    document.getElementById('editModeBar').classList.remove('active');
+
+    document.querySelectorAll('[data-editable]').forEach(function(el) {
+      el.contentEditable = 'false';
+      el.removeEventListener('input', onEditableInput);
+      el.removeEventListener('blur', onEditableBlur);
+    });
+  }
+
+  var saveTimer;
+  function onEditableInput() {
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(saveAllEdits, 800);
+  }
+
+  function onEditableBlur() {
+    saveAllEdits();
+  }
+
+  function saveAllEdits() {
+    var saved = {};
+    document.querySelectorAll('[data-editable]').forEach(function(el) {
+      saved[el.getAttribute('data-editable')] = el.innerHTML;
+    });
+    try {
+      localStorage.setItem('ember_edits', JSON.stringify(saved));
+    } catch(e) {}
+    showSaveToast();
+  }
+
+  function showSaveToast() {
+    var toast = document.getElementById('editToast');
+    toast.classList.add('show');
+    setTimeout(function() { toast.classList.remove('show'); }, 1800);
+  }
+
+  // Restore saved edits on page load
+  (function restoreEdits() {
+    try {
+      var saved = JSON.parse(localStorage.getItem('ember_edits') || '{}');
+      Object.keys(saved).forEach(function(key) {
+        var el = document.querySelector('[data-editable="' + key + '"]');
+        if (el) el.innerHTML = saved[key];
+      });
+    } catch(e) {}
+  })();
+
+  /* ── VISITOR COUNTER ── */
+  (function() {
+    var key = 'ember_visit_count';
+    var count = parseInt(localStorage.getItem(key) || '0', 10) + 1;
+    localStorage.setItem(key, count);
+    document.getElementById('visitorCount').textContent = count.toLocaleString();
+  })();
+
+  /* ── OWNER CORNER ── */
+  function toggleOwnerPanel() {
+    var panel = document.getElementById('ownerPanel');
+    var toggle = document.getElementById('ownerToggle');
+    var isMinimized = panel.classList.toggle('minimized');
+    if (isMinimized) {
+      toggle.classList.add('visible');
+    } else {
+      toggle.classList.remove('visible');
+    }
+  }
+
+  /* ── FEEDBACK MODAL ── */
+  function openFeedback() {
+    document.getElementById('feedbackOverlay').classList.remove('hidden');
+    document.getElementById('feedbackForm').style.display = '';
+    document.getElementById('feedbackSuccess').style.display = 'none';
+    document.body.style.overflow = 'hidden';
+  }
+  function closeFeedback() {
+    document.getElementById('feedbackOverlay').classList.add('hidden');
+    document.body.style.overflow = '';
+    document.getElementById('fbSubject').value = '';
+    document.getElementById('fbMessage').value = '';
+  }
+  function feedbackOverlayClick(e) {
+    if (e.target === document.getElementById('feedbackOverlay')) closeFeedback();
+  }
+  function sendFeedback() {
+    var subject = document.getElementById('fbSubject').value.trim() || '(no subject)';
+    var message = document.getElementById('fbMessage').value.trim();
+    if (!message) { document.getElementById('fbMessage').focus(); return; }
+
+    if (typeof emailjs === 'undefined') {
+      alert('Email service not loaded — please check your internet connection and try again.');
+      return;
+    }
+
+    var btn = document.querySelector('.feedback-send-btn');
+    btn.textContent = 'Sending...';
+    btn.disabled = true;
+
+    emailjs.send('service_jdptp1o', 'template_tlltfbl', {
+      title: subject,
+      name: 'Anonymous visitor',
+      time: new Date().toLocaleString(),
+      message: message
+    }).then(function() {
+      document.getElementById('feedbackForm').style.display = 'none';
+      document.getElementById('feedbackSuccess').style.display = 'block';
+      setTimeout(closeFeedback, 2800);
+    }, function(error) {
+      btn.textContent = 'Send message';
+      btn.disabled = false;
+      alert('Something went wrong — please try again.');
+      console.error('EmailJS error:', error);
+    });
+  }
+
+  /* ── EDIT / DELETE STORY ── */
+  function openStoryOwnerActions(id) {
+    var editWrap = document.getElementById('editWrap-' + id);
+    if (editWrap) editWrap.style.display = editWrap.style.display === 'block' ? 'none' : 'block';
+  }
+
+  function saveEdit(id) {
+    var s = stories.find(function(x){ return x.id === id; });
+    var newText = document.getElementById('editText-' + id).value.trim();
+    if (!newText) return;
+    s.text = newText;
+    renderStories(currentFilter);
+    openStory(id, true);
+  }
+
+  function cancelEdit(id) {
+    var wrap = document.getElementById('editWrap-' + id);
+    if (wrap) wrap.style.display = 'none';
+  }
+
+  function deleteStory(id) {
+    if (!confirm('Are you sure you want to delete your story? This cannot be undone.')) return;
+    stories = stories.filter(function(x){ return x.id !== id; });
+    renderStories(currentFilter);
+    closeView();
+  }
+</script>
+</body>
+</html>
