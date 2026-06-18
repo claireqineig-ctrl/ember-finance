@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy — ember.finance</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #1C1F2E;
+    --navy-card: #252A3C;
+    --amber: #D4894A;
+    --amber-light: #F0B97A;
+    --slate: #6B7A99;
+    --cream: #F5F0E8;
+    --text-main: #E8E4DC;
+    --text-muted: #8A95B0;
+    --border: rgba(107,122,153,0.25);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--navy);
+    color: var(--text-main);
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  .site-header {
+    padding: 1.5rem 2.5rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    position: sticky;
+    top: 0;
+    background: var(--navy);
+    z-index: 10;
+  }
+  .logo-block { display: flex; flex-direction: column; gap: 2px; }
+  .site-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--cream);
+    letter-spacing: -0.3px;
+    text-decoration: none;
+  }
+  .site-title span { color: var(--amber); }
+  .tagline { font-size: 12px; color: var(--text-muted); letter-spacing: 0.4px; }
+  .back-btn {
+    background: transparent;
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+    padding: 9px 20px;
+    border-radius: 6px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .back-btn:hover { border-color: var(--amber); color: var(--amber); }
+
+  /* PAGE CONTENT */
+  .page-wrap {
+    max-width: 740px;
+    margin: 0 auto;
+    padding: 3.5rem 2.5rem 5rem;
+  }
+
+  .page-label {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--amber);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+
+  .page-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    font-weight: 400;
+    color: var(--cream);
+    line-height: 1.3;
+    margin-bottom: 0.5rem;
+  }
+
+  .page-date {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 2.5rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .notice-box {
+    background: rgba(212,137,74,0.08);
+    border: 1px solid rgba(212,137,74,0.25);
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.65;
+    margin-bottom: 2.5rem;
+  }
+  .notice-box strong { color: var(--amber); }
+
+  .commitment-box {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.4rem 1.6rem;
+    margin-bottom: 2.5rem;
+  }
+  .commitment-box p {
+    font-size: 14.5px;
+    color: var(--text-main);
+    line-height: 1.8;
+    font-style: italic;
+  }
+  .commitment-box p strong { color: var(--amber); font-style: normal; }
+
+  .section { margin-bottom: 2.25rem; }
+
+  .section-number {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--amber);
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+  }
+
+  .section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 400;
+    color: var(--cream);
+    margin-bottom: 0.85rem;
+  }
+
+  .section h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-main);
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .section p {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.8;
+    margin-bottom: 0.75rem;
+  }
+
+  .section ul {
+    list-style: none;
+    margin: 0.5rem 0 0.75rem 0;
+  }
+  .section ul li {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.75;
+    padding: 0.3rem 0 0.3rem 1.2rem;
+    position: relative;
+  }
+  .section ul li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--amber);
+    opacity: 0.6;
+  }
+
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 2.5rem 0;
+  }
+
+  .highlight-box {
+    background: rgba(255,255,255,0.03);
+    border-left: 3px solid var(--amber);
+    border-radius: 0 8px 8px 0;
+    padding: 0.9rem 1.1rem;
+    margin: 1rem 0;
+    font-size: 13.5px;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+  .highlight-box strong { color: var(--text-main); }
+
+  /* FOOTER */
+  .site-footer {
+    border-top: 1px solid var(--border);
+    padding: 2rem 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .footer-copy { font-size: 12px; color: var(--text-muted); }
+  .footer-links { display: flex; gap: 1.25rem; }
+  .footer-links a {
+    font-size: 12px;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--amber); }
+
+  @media (max-width: 680px) {
+    .page-wrap { padding: 2.5rem 1.25rem 4rem; }
+    .site-header { padding: 1.25rem; }
+    .page-title { font-size: 28px; }
+    .site-footer { padding: 1.5rem 1.25rem; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="logo-block">
+    <a href="index.html" class="site-title">ember<span>.</span>finance</a>
+    <div class="tagline">a safe space for sharing doubts, vulnerability, and showing support for peers</div>
+  </div>
+  <a href="index.html" class="back-btn">← Back to stories</a>
+</header>
+
+<div class="page-wrap">
+  <div class="page-label">Legal</div>
+  <h1 class="page-title">Privacy Policy</h1>
+  <p class="page-date">Last updated: June 2026</p>
+
+  <div class="commitment-box">
+    <p>"ember.finance was built around anonymity. We believe people share more honestly — and heal more openly — when they don't have to worry about being identified. <strong>We do not ask for your name, email address, or any account credentials. We will never sell your data.</strong>"</p>
+  </div>
+
+  <div class="notice-box">
+    <strong>Note:</strong> This is a template for informational purposes. Before publishing, have a qualified attorney review it for your jurisdiction, particularly if you expect users from the EU (GDPR) or California (CCPA).
+  </div>
+
+  <div class="section">
+    <div class="section-number">01</div>
+    <h2>Who This Policy Applies To</h2>
+    <p>This policy applies to anyone who visits or uses ember.finance, including people who read stories, post stories, or leave comments.</p>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <div class="section-number">02</div>
+    <h2>Information We Collect</h2>
+
+    <h3>2.1 Information you provide</h3>
+    <p>ember.finance does not ask you to provide any personal information. When you submit a story or comment, you are not asked for your name, email, employer, or any identifying details. The only data associated with a submitted story is:</p>
+    <ul>
+      <li>The content of the story itself</li>
+      <li>Your selected role category, years of experience, and burnout stage (all anonymised)</li>
+      <li>A randomly generated token (e.g. EMB-4X7K) — generated by your browser, not linked to your identity</li>
+    </ul>
+
+    <h3>2.2 Information collected automatically</h3>
+    <p>Like most websites, our servers may automatically receive standard technical information when you visit, including your IP address (anonymised where possible), browser type and version, operating system, and pages visited. This is used solely for security monitoring and platform performance.</p>
+
+    <h3>2.3 Cookies and tracking</h3>
+    <p>ember.finance uses minimal cookies necessary to operate the site. We do not use advertising cookies, third-party tracking pixels, or behavioural analytics tools that profile individual users.</p>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <div class="section-number">03</div>
+    <h2>How We Use Information</h2>
+    <p>We use the limited information we collect to:</p>
+    <ul>
+      <li>Display stories and comments on the platform</li>
+      <li>Monitor for abuse, spam, or content that violates our Terms of Service</li>
+      <li>Understand general usage patterns to improve the platform (aggregated only)</li>
+      <li>Respond to content removal requests submitted with a valid story token</li>
+    </ul>
+    <p>We do not use your information for advertising, profiling, or sale to third parties.</p>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <div class="section-number">04</div>
+    <h2>Story Tokens</h2>
+    <div class="highlight-box">
+      <strong>Your token is the only way to locate and manage your story.</strong> It is not linked to your identity in any way and cannot be used by us to identify who you are. You are responsible for keeping it safe — if you lose it, we have no way to verify your ownership of a story.
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <div class="section-number">05</div>
+    <h2>Content You Submit</h2>
+    <p>Stories and comments you post are visible to all visitors of ember.finance. Although no personal information is required, please be mindful of any details within your story that could inadvertently identify you (such as specific deals, dates, or firm characteristics).</p>
+    <p>If you wish to have your story removed, email <a href="mailto:hello@emberfinstories.com" style="color:var(--amber)">hello@emberfinstories.com</a> with your story token. We will process valid requests within 14 days.</p>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <div class="section-number">06</div>
+    <h2>Data Sharing & Third Parties</h2>
+    <p>We do not sell, rent, or trade your information with third parties. We may share limited technical data with:</p>
+    <ul>
+      <li><strong style="color:var(--text-main)">Hosting and infrastructure providers</strong> — to operate and maintain the platform, under contractual data protection obligations</li>
+      <li><strong style="color:var(--text-main)">Law enforcement or regulators</strong> — only if required by law or to prevent imminent harm</li>
+    </ul>
+    <p>We will always seek to share the minimum information necessary.</p>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <div class="section-number">07</div>
+    <h2>Data Retention</h2>
+    <p>User-submitted stories and comments are retained for as long as the platform is active, or until a removal request is submitted. Anonymised server logs are retained for up to 90 days for security purposes.</p>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <div class="section-number">08</div>
+    <h2>Security</h2>
+    <p>We take reasonable technical measures to protect the platform and its content, including HTTPS encryption and access controls. However, no system is completely secure. Please do not submit information to this platform that you would consider highly sensitive beyond what is needed to share your story.</p>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <div class="section-number">09</div>
+    <h2>Children's Privacy</h2>
+    <p>ember.finance is not directed at anyone under the age of 18. We do not knowingly collect information from minors. If you believe a minor has submitted content to the platform, please contact us at <a href="mailto:hello@emberfinstories.com" style="color:var(--amber)">hello@emberfinstories.com</a> and we will remove it promptly.</p>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <div class="section-number">10</div>
+    <h2>International Users</h2>
+    <p>ember.finance is operated from the State of New York, United States. If you are accessing the platform from outside this jurisdiction — including from the European Union or United Kingdom — please be aware that your information may be processed in a different country.</p>
+    <p><strong style="color:var(--text-main)">For EU/UK users (GDPR):</strong> Our legal basis for processing limited technical data is legitimate interest. You have the right to access, correct, or erase any personal data we hold. To exercise these rights, contact <a href="mailto:hello@emberfinstories.com" style="color:var(--amber)">hello@emberfinstories.com</a>.</p>
+    <p><strong style="color:var(--text-main)">For California users (CCPA):</strong> You have the right to know what personal information we collect, to request deletion, and to opt out of the sale of your data. We do not sell personal data.</p>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <div class="section-number">11</div>
+    <h2>Changes to This Policy</h2>
+    <p>We may update this Privacy Policy from time to time. The "Last updated" date at the top will reflect any changes. Continued use of the platform after changes constitutes acceptance of the revised policy.</p>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <div class="section-number">12</div>
+    <h2>Contact</h2>
+    <p>For privacy-related questions, data removal requests, or concerns — we aim to respond within 5 business days.</p>
+    <p><a href="mailto:hello@emberfinstories.com" style="color:var(--amber)">hello@emberfinstories.com</a></p>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <span class="footer-copy">© 2026 ember.finance — all rights reserved</span>
+  <nav class="footer-links">
+    <a href="terms.html">Terms of Service</a>
+    <a href="privacy.html">Privacy Policy</a>
+    <a href="mailto:hello@emberfinstories.com">Contact</a>
+  </nav>
+</footer>
+
+</body>
+</html>
