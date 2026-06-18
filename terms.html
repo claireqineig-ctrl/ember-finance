@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Terms of Service — ember.finance</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #1C1F2E;
+    --navy-card: #252A3C;
+    --amber: #D4894A;
+    --amber-light: #F0B97A;
+    --slate: #6B7A99;
+    --cream: #F5F0E8;
+    --text-main: #E8E4DC;
+    --text-muted: #8A95B0;
+    --border: rgba(107,122,153,0.25);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--navy);
+    color: var(--text-main);
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  .site-header {
+    padding: 1.5rem 2.5rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    position: sticky;
+    top: 0;
+    background: var(--navy);
+    z-index: 10;
+  }
+  .logo-block { display: flex; flex-direction: column; gap: 2px; }
+  .site-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--cream);
+    letter-spacing: -0.3px;
+    text-decoration: none;
+  }
+  .site-title span { color: var(--amber); }
+  .tagline { font-size: 12px; color: var(--text-muted); letter-spacing: 0.4px; }
+  .back-btn {
+    background: transparent;
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+    padding: 9px 20px;
+    border-radius: 6px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .back-btn:hover { border-color: var(--amber); color: var(--amber); }
+
+  /* PAGE CONTENT */
+  .page-wrap {
+    max-width: 740px;
+    margin: 0 auto;
+    padding: 3.5rem 2.5rem 5rem;
+  }
+
+  .page-label {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--amber);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+
+  .page-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    font-weight: 400;
+    color: var(--cream);
+    line-height: 1.3;
+    margin-bottom: 0.5rem;
+  }
+
+  .page-date {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 2.5rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .notice-box {
+    background: rgba(212,137,74,0.08);
+    border: 1px solid rgba(212,137,74,0.25);
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.65;
+    margin-bottom: 2.5rem;
+  }
+  .notice-box strong { color: var(--amber); }
+
+  .section {
+    margin-bottom: 2.25rem;
+  }
+
+  .section-number {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--amber);
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+  }
+
+  .section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 400;
+    color: var(--cream);
+    margin-bottom: 0.85rem;
+  }
+
+  .section h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-main);
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .section p {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.8;
+    margin-bottom: 0.75rem;
+  }
+
+  .section ul {
+    list-style: none;
+    margin: 0.5rem 0 0.75rem 0;
+  }
+  .section ul li {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.75;
+    padding: 0.3rem 0 0.3rem 1.2rem;
+    position: relative;
+  }
+  .section ul li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--amber);
+    opacity: 0.6;
+  }
+
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 2.5rem 0;
+  }
+
+  .highlight-box {
+    background: rgba(255,255,255,0.03);
+    border-left: 3px solid var(--amber);
+    border-radius: 0 8px 8px 0;
+    padding: 0.9rem 1.1rem;
+    margin: 1rem 0;
+    font-size: 13.5px;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+  .highlight-box strong { color: var(--text-main); }
+
+  /* FOOTER */
+  .site-footer {
+    border-top: 1px solid var(--border);
+    padding: 2rem 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .footer-copy { font-size: 12px; color: var(--text-muted); }
+  .footer-links { display: flex; gap: 1.25rem; }
+  .footer-links a {
+    font-size: 12px;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--amber); }
+
+  @media (max-width: 680px) {
+    .page-wrap { padding: 2.5rem 1.25rem 4rem; }
+    .site-header { padding: 1.25rem; }
+    .page-title { font-size: 28px; }
+    .site-footer { padding: 1.5rem 1.25rem; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="logo-block">
+    <a href="index.html" class="site-title">ember<span>.</span>finance</a>
+    <div class="tagline">a safe space for sharing doubts, vulnerability, and showing support for peers</div>
+  </div>
+  <a href="index.html" class="back-btn">← Back to stories</a>
+</header>
+
+<div class="page-wrap">
+  <div class="page-label">Legal</div>
+  <h1 class="page-title">Terms of Service</h1>
+  <p class="page-date">Last updated: June 2026</p>
+
+  <div class="notice-box">
+    <strong>Note:</strong> This document is a template for informational purposes. Before publishing, have a qualified attorney review it for your jurisdiction and specific use case.
+  </div>
+
+  <div class="section">
+    <div class="section-number">01</div>
+    <h2>About ember.finance</h2>
+    <p>ember.finance ("we," "us," or "the platform") is an anonymous peer support space for finance professionals to share experiences related to workplace burnout and mental wellbeing. By accessing or using this site, you agree to these Terms of Service ("Terms").</p>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <div class="section-number">02</div>
+    <h2>Eligibility</h2>
+    <p>You must be at least 18 years old to use this platform. By using ember.finance, you represent that you meet this requirement.</p>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <div class="section-number">03</div>
+    <h2>Anonymity & No Account System</h2>
+    <p>ember.finance does not require you to create an account or provide any personally identifiable information. Stories are submitted and identified only by a randomly generated token. We do not link your content to your identity.</p>
+    <p>You are responsible for keeping your story token private. We cannot recover lost tokens or verify story ownership without one.</p>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <div class="section-number">04</div>
+    <h2>User-Submitted Content</h2>
+
+    <h3>4.1 Your ownership</h3>
+    <p>You retain copyright in any story or comment you submit to ember.finance.</p>
+
+    <h3>4.2 License to us</h3>
+    <p>By submitting content, you grant ember.finance a non-exclusive, worldwide, royalty-free license to display, store, and distribute your content on the platform for the purpose of operating the service.</p>
+
+    <h3>4.3 What you agree not to post</h3>
+    <p>You agree not to submit content that:</p>
+    <ul>
+      <li>Identifies any real person without their consent</li>
+      <li>Contains hate speech, threats, or harassment</li>
+      <li>Promotes or provides instructions for self-harm or harm to others</li>
+      <li>Infringes on any third party's copyright, trademark, or other rights</li>
+      <li>Is false, misleading, or constitutes spam</li>
+      <li>Violates any applicable law or regulation</li>
+    </ul>
+    <p>We reserve the right to remove any content that violates these Terms, without notice.</p>
+
+    <h3>4.4 Content removal</h3>
+    <p>If you wish to have your story removed, contact us at <a href="mailto:hello@emberfinstories.com" style="color:var(--amber)">hello@emberfinstories.com</a> with your story token. We will action valid requests within 14 days.</p>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <div class="section-number">05</div>
+    <h2>Not a Medical or Mental Health Service</h2>
+    <div class="highlight-box">
+      <strong>ember.finance is a peer support community — it is not a medical service, mental health provider, crisis intervention service, or substitute for professional care.</strong><br><br>
+      Nothing on this platform constitutes medical, psychological, or therapeutic advice. If you are in crisis, please contact emergency services or a crisis helpline immediately.
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <div class="section-number">06</div>
+    <h2>Intellectual Property</h2>
+    <p>The ember.finance name, logo, design, and original written content (excluding user submissions) are the intellectual property of ember.finance and may not be reproduced without written permission.</p>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <div class="section-number">07</div>
+    <h2>Disclaimer of Warranties</h2>
+    <p>ember.finance is provided "as is" without warranties of any kind, express or implied. We do not guarantee that the platform will be uninterrupted, error-free, or free of harmful content submitted by users.</p>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <div class="section-number">08</div>
+    <h2>Limitation of Liability</h2>
+    <p>To the fullest extent permitted by law, ember.finance and its operators shall not be liable for any indirect, incidental, or consequential damages arising from your use of the platform, including but not limited to reliance on user-submitted stories or comments.</p>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <div class="section-number">09</div>
+    <h2>Privacy</h2>
+    <p>Our use of any data we collect is governed by our <a href="privacy.html" style="color:var(--amber)">Privacy Policy</a>. In brief: we do not collect personally identifiable information. We may collect anonymised usage analytics (e.g. page views) to improve the platform.</p>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <div class="section-number">10</div>
+    <h2>Changes to These Terms</h2>
+    <p>We may update these Terms from time to time. The "Last updated" date at the top will reflect any changes. Continued use of the platform after changes constitutes acceptance of the revised Terms.</p>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <div class="section-number">11</div>
+    <h2>Governing Law</h2>
+    <p>These Terms are governed by the laws of the State of New York, United States, without regard to conflict of law principles. Any disputes shall be resolved in the state or federal courts located in New York.</p>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <div class="section-number">12</div>
+    <h2>Contact</h2>
+    <p>For questions about these Terms, content removal requests, or other concerns:</p>
+    <p><a href="mailto:hello@emberfinstories.com" style="color:var(--amber)">hello@emberfinstories.com</a></p>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <span class="footer-copy">© 2026 ember.finance — all rights reserved</span>
+  <nav class="footer-links">
+    <a href="terms.html">Terms of Service</a>
+    <a href="privacy.html">Privacy Policy</a>
+    <a href="mailto:hello@emberfinstories.com">Contact</a>
+  </nav>
+</footer>
+
+</body>
+</html>
